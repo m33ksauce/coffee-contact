@@ -28,19 +28,16 @@ namespace CoffeeContact.Web.Services
             });
         }
 
-        public async Task SendMessage(Dictionary<string, string> responses) {
+        public async Task SendMessage<T>(T message)
+        where T : class
+        {
             var sendEndpoint = await _provider.GetSendEndpoint(
                 new Uri("sb://coffeecontact-dev-servicebus.servicebus.windows.net/" + _queueName));
 
-            var msg = new SurveyResponseCreated();
-            msg.SurveyID = Guid.NewGuid().ToString();
-            msg.Answers = responses;
-
             try
             {
-                
-                await sendEndpoint.Send<SurveyResponseCreated>(msg);
-                _logger.LogInformation($"Sent message GUID {msg.SurveyID}");
+                await sendEndpoint.Send<T>(message);
+                _logger.LogInformation($"Sent message GUID");
             }
             catch {}
         }

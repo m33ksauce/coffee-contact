@@ -5,6 +5,6 @@ using System;
 namespace CoffeeContact.Web.Services
 {
     public interface IMessageService {
-        Task SendMessage(Dictionary<string, string> responses);
+        Task SendMessage<T>(T message) where T : class;
     }
 }

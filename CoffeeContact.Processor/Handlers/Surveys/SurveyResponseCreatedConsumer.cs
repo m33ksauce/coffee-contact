@@ -9,6 +9,7 @@ namespace CoffeeContact.Processor.Handlers.Surveys
     public class SurveyResponseCreatedConsumer : IConsumer<SurveyResponseCreated>
     {
         private readonly ILogger<SurveyResponseCreatedConsumer> _logger;
+        private int runCount = 0;
 
         public SurveyResponseCreatedConsumer(ILogger<SurveyResponseCreatedConsumer> logger)
         {
@@ -18,7 +19,7 @@ namespace CoffeeContact.Processor.Handlers.Surveys
         public Task Consume(ConsumeContext<SurveyResponseCreated> context)
         {
             _logger.LogInformation($"{context.Message}");
-            Console.WriteLine("it worked");
+            Console.WriteLine($"Received {++runCount} messages");
 
             return Task.CompletedTask;
         }
