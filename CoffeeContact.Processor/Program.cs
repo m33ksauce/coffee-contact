@@ -13,9 +13,6 @@ namespace CoffeeContact.Processor
 {
     public class Program
     {
-        private static string key = "";
-        private static string _connString = 
-            "Endpoint=sb://coffeecontact-dev-servicebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=" + key;
         private static string _queueName = "defaultqueue";
 
         public static void Main(string[] args)
@@ -33,7 +30,10 @@ namespace CoffeeContact.Processor
 
                         x.UsingAzureServiceBus((context,cfg) =>
                         {
-                            cfg.Host(_connString);
+                            var connString = hostContext.Configuration["ServiceBusConnectionString"] +
+                                hostContext.Configuration["ServiceBusKey"];
+
+                            cfg.Host(connString);
                             cfg.ReceiveEndpoint(_queueName, e => {
                                 e.SelectBasicTier();
                                 e.ConfigureConsumeTopology = false;

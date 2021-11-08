@@ -5,20 +5,20 @@ using Azure.Messaging.ServiceBus;
 using CoffeeContact.Data.Messages;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace CoffeeContact.Web.Services
 {
     public class MessageService : IMessageService
     {
         private ILogger<MessageService> _logger;
-        private static string key = "";
-        private static string _connString = 
-            "Endpoint=sb://coffeecontact-dev-servicebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=" + key;
+        private string _connString;
         private string _queueName = "defaultqueue";
 
         private ISendEndpointProvider _provider;
 
-        public MessageService(ILogger<MessageService> logger) {
+        public MessageService(ILogger<MessageService> logger, IConfiguration config) {
+            _connString = config["ServiceBusConnectionString"] + config["ServiceBusKey"];
             _logger = logger;
             _provider = Bus.Factory.CreateUsingAzureServiceBus(cfg => {
                 cfg.Host(_connString);
