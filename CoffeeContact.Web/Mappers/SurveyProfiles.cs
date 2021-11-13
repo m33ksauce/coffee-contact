@@ -1,14 +1,14 @@
-using System;
-using AutoMapper;
-using CoffeeContact.Data.Messages;
-using CoffeeContact.Web.Models;
-
 namespace CoffeeContact.Web.Mappers
 {
-    public class SurveyMapperProfiles : Profile
+    using AutoMapper;
+    using CoffeeContact.Data.Messages;
+    using CoffeeContact.Web.Models;
+
+    public class SurveyProfiles : Profile
     {
-        public SurveyMapperProfiles() {
-            CreateMap<SurveyResultsModel, SurveyResponseCreated>();
+        public SurveyProfiles()
+        {
+            this.CreateMap<SurveyResultsModel, SurveyResponseCreated>();
         }
     }
 }

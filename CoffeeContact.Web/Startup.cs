@@ -1,25 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using CoffeeContact.Web.Services;
-using CoffeeContact.Web.Context;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 namespace CoffeeContact.Web
 {
+    using CoffeeContact.Web.Context;
+    using CoffeeContact.Web.Services;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -30,8 +24,9 @@ namespace CoffeeContact.Web
             services.AddControllersWithViews();
             services.AddScoped<IMessageService, MessageService>();
             services.AddAutoMapper(typeof(Startup));
-            services.AddDbContext<CoffeeContext>(options => {
-                options.UseCosmos(Configuration["EntityFrameworkConnString"], databaseName: "CoffeeContactDev");
+            services.AddDbContext<CoffeeContext>(options =>
+            {
+                options.UseCosmos(this.Configuration["EntityFrameworkConnString"], databaseName: "CoffeeContactDev");
             });
         }
 
@@ -45,9 +40,11 @@ namespace CoffeeContact.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

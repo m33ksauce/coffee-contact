@@ -1,12 +1,14 @@
-using System;
-using CoffeeContact.Web.Models;
-using Microsoft.EntityFrameworkCore;
-
 namespace CoffeeContact.Web.Context
 {
+    using CoffeeContact.Web.Models;
+    using Microsoft.EntityFrameworkCore;
+
     public class CoffeeContext : DbContext
     {
-        public CoffeeContext(DbContextOptions<CoffeeContext> options) : base(options) {}
+        public CoffeeContext(DbContextOptions<CoffeeContext> options)
+        : base(options)
+        {
+        }
 
         public DbSet<SurveyResultsModel> SurveyResults { get; set; }
 
