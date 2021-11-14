@@ -1,19 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ContactCoffee.Data.Messages;
-using ContactCoffee.Processor.Handlers.Surveys;
-using MassTransit;
-using MassTransit.Azure.ServiceBus.Core;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 namespace ContactCoffee.Processor
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using ContactCoffee.Data.Messages;
+    using ContactCoffee.Processor.Handlers.Surveys;
+    using MassTransit;
+    using MassTransit.Azure.ServiceBus.Core;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+
     public class Program
     {
-        private static string _queueName = "defaultqueue";
+        private static string queueName = "defaultqueue";
 
         public static void Main(string[] args)
         {
@@ -28,13 +28,14 @@ namespace ContactCoffee.Processor
                     {
                         x.AddConsumer<SurveyResponseCreatedConsumer>();
 
-                        x.UsingAzureServiceBus((context,cfg) =>
+                        x.UsingAzureServiceBus((context, cfg) =>
                         {
                             var connString = hostContext.Configuration["ServiceBusConnectionString"] +
                                 hostContext.Configuration["ServiceBusKey"];
 
                             cfg.Host(connString);
-                            cfg.ReceiveEndpoint(_queueName, e => {
+                            cfg.ReceiveEndpoint(queueName, e =>
+                            {
                                 e.SelectBasicTier();
                                 e.ConfigureConsumeTopology = false;
                                 e.ConfigureConsumer<SurveyResponseCreatedConsumer>(context);
