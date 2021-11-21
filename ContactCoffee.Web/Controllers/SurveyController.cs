@@ -28,6 +28,11 @@ namespace ContactCoffee.Web.Controllers
             this.context = context;
         }
 
+        public IActionResult Index()
+        {
+            return this.View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Submit([FromBody]SurveyResultsModel model)
         {
