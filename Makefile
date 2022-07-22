@@ -29,7 +29,9 @@ build: $(RUNNABLE_PROJECTS:%=build-%)
 build-%:
 	dotnet build $*
 
-run: start-emulator $(RUNNABLE_PROJECTS:%=run-%)
+run: $(RUNNABLE_PROJECTS:%=run-%)
+
+runall: run start-emulator
 
 run-%:
 	dotnet run -p $* & \
@@ -37,13 +39,15 @@ run-%:
 
 stop: $(RUNNABLE_PROJECTS:%=stop-%)
 
-stop-%: | $(*:%=%.pid) stop-emulator
+stop-%: | $(*:%=%.pid)
 	kill $$(cat $*.pid) && \
 		rm $*.pid
 
+stopall: stop stop-emulator
+
 start-emulator:
 	docker start $(EMULATOR_IMAGE_NAME)
-	sleep 15
+	sleep 120
 
 stop-emulator:
 	docker stop $(EMULATOR_IMAGE_NAME)

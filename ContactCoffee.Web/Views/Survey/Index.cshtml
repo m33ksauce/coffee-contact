@@ -1,8 +1,26 @@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Survey Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <form id="visitor-survey">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="visitor-name">Name</label>
+                    <input type="text" class="form-control" placeholder="Name" name="visitor-name"></input>
+                </div>
+                <div class="form-group">
+                    <label for="visitor-email">Email</label>
+                    <input type="email" class="form-control" placeholder="Email" name="visitor-email"></input>
+                </div>
+                <div class="form-group">
+                    <label for="visitor-phone">Phone</label>
+                    <input type="phone" class="form-control" placeholder="xxx-xxx-xxxx" name="visitor-phone"></input>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
 </div>

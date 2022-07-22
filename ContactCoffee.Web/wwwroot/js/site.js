@@ -2,3 +2,9 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+
+$("#visitor-survey").click((event) => {
+    console.log("test");
+    event.preventDefault();
+})
